@@ -1,0 +1,13 @@
+[package]
+name = "tiborstd"
+version = "0.1.0"
+edition = "2024"
+
+[features]
+default = ["bitset"]
+bitset = []
+const-macros = []
+serde = ["dep:serde"]
+
+[dependencies]
+serde = {version = "1.0.228", optional = true, features = ["derive"]}
