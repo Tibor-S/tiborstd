@@ -8,6 +8,7 @@ default = ["bitset"]
 bitset = []
 const-macros = []
 serde = ["dep:serde"]
+container = []
 
 [dependencies]
 serde = {version = "1.0.228", optional = true, features = ["derive"]}
