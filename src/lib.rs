@@ -6,3 +6,5 @@ pub mod const_macros;
 pub mod container;
 #[cfg(feature = "either")]
 pub mod either;
+#[cfg(feature = "math")]
+pub mod math;

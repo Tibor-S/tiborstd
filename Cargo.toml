@@ -1,6 +1,6 @@
 [package]
 name = "tiborstd"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2024"
 
 [features]
@@ -10,6 +10,7 @@ either = []
 const-macros = []
 serde = ["dep:serde"]
 container = []
+math = []
 
 [dependencies]
 serde = {version = "1.0.228", optional = true, features = ["derive"]}
