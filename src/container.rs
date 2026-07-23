@@ -25,7 +25,6 @@ pub trait Readable<T> {
     where
         Self: 'a;
     type TryGuard<G>;
-    type Weak: WeakContainer<T, Strong = Self>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>>;
     fn try_read_non_blocking<'a>(&'a self) -> Option<Self::TryGuard<Self::ReadGuard<'a>>>;
@@ -51,7 +50,6 @@ impl<T: Clone> Readable<T> for T {
     where
         Self: 'a;
     type TryGuard<G> = G;
-    type Weak = Option<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         self
@@ -68,7 +66,6 @@ impl<T> Readable<T> for RcR<T> {
     where
         Self: 'a;
     type TryGuard<G> = G;
-    type Weak = WkRcR<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         self
@@ -85,7 +82,6 @@ impl<T> Readable<T> for RcRW<T> {
     where
         Self: 'a;
     type TryGuard<G> = LockResult<G>;
-    type Weak = WkRcRW<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         RwLock::read(self)
@@ -106,7 +102,6 @@ impl<T> Readable<T> for RcM<T> {
     where
         Self: 'a;
     type TryGuard<G> = LockResult<G>;
-    type Weak = WkRcM<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         Mutex::lock(self)
@@ -127,7 +122,6 @@ impl<T> Readable<T> for ArcR<T> {
     where
         Self: 'a;
     type TryGuard<G> = G;
-    type Weak = WkArcR<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         self
@@ -144,7 +138,6 @@ impl<T> Readable<T> for ArcRW<T> {
     where
         Self: 'a;
     type TryGuard<G> = LockResult<G>;
-    type Weak = WkArcRW<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         RwLock::read(self)
@@ -165,7 +158,6 @@ impl<T> Readable<T> for ArcM<T> {
     where
         Self: 'a;
     type TryGuard<G> = LockResult<G>;
-    type Weak = WkArcM<T>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>> {
         Mutex::lock(self)
