@@ -38,7 +38,7 @@ pub trait Readable<T> {
     }
 }
 
-impl<T: Clone> Readable<T> for T {
+impl<T> Readable<T> for T {
     type ReadGuard<'a>
         = &'a T
     where
