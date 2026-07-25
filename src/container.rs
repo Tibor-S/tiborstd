@@ -24,22 +24,16 @@ pub trait Readable<T> {
     type ReadGuard<'a>: Deref<Target = T>
     where
         Self: 'a;
-    type TryGuard<G>;
+    type TryGuard<G>: Recoverable<G>;
 
     fn try_read<'a>(&'a self) -> Self::TryGuard<Self::ReadGuard<'a>>;
     fn try_read_non_blocking<'a>(&'a self) -> Option<Self::TryGuard<Self::ReadGuard<'a>>>;
 
-    fn read<'a>(&'a self) -> Self::ReadGuard<'a>
-    where
-        Self::TryGuard<Self::ReadGuard<'a>>: Recoverable<Self::ReadGuard<'a>>,
-    {
+    fn read<'a>(&'a self) -> Self::ReadGuard<'a> {
         self.try_read().recover()
     }
 
-    fn read_non_blocking<'a>(&'a self) -> Option<Self::ReadGuard<'a>>
-    where
-        Self::TryGuard<Self::ReadGuard<'a>>: Recoverable<Self::ReadGuard<'a>>,
-    {
+    fn read_non_blocking<'a>(&'a self) -> Option<Self::ReadGuard<'a>> {
         self.try_read_non_blocking().map(|res| res.recover())
     }
 }
@@ -180,17 +174,11 @@ pub trait Writable<T>: Readable<T> {
     fn try_write<'a>(&'a self) -> Self::TryGuard<Self::WriteGuard<'a>>;
     fn try_write_non_blocking<'a>(&'a self) -> Option<Self::TryGuard<Self::WriteGuard<'a>>>;
 
-    fn write<'a>(&'a self) -> Self::WriteGuard<'a>
-    where
-        Self::TryGuard<Self::WriteGuard<'a>>: Recoverable<Self::WriteGuard<'a>>,
-    {
+    fn write<'a>(&'a self) -> Self::WriteGuard<'a> {
         self.try_write().recover()
     }
 
-    fn write_non_blocking<'a>(&'a self) -> Option<Self::WriteGuard<'a>>
-    where
-        Self::TryGuard<Self::WriteGuard<'a>>: Recoverable<Self::WriteGuard<'a>>,
-    {
+    fn write_non_blocking<'a>(&'a self) -> Option<Self::WriteGuard<'a>> {
         self.try_write_non_blocking().map(|res| res.recover())
     }
 }
