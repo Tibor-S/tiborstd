@@ -21,6 +21,7 @@ pub type ArcM<T> = Arc<Mutex<T>>;
 pub type WkArcM<T> = sync::Weak<Mutex<T>>;
 
 pub trait Readable<T> {
+    type Resolved;
     type ReadGuard<'a>: Deref<Target = T>
     where
         Self: 'a;
@@ -39,6 +40,7 @@ pub trait Readable<T> {
 }
 
 impl<T> Readable<T> for T {
+    type Resolved = T;
     type ReadGuard<'a>
         = &'a T
     where
@@ -55,6 +57,7 @@ impl<T> Readable<T> for T {
 }
 
 impl<T> Readable<T> for RcR<T> {
+    type Resolved = T;
     type ReadGuard<'a>
         = &'a T
     where
@@ -71,6 +74,7 @@ impl<T> Readable<T> for RcR<T> {
 }
 
 impl<T> Readable<T> for RcRW<T> {
+    type Resolved = T;
     type ReadGuard<'a>
         = RwLockReadGuard<'a, T>
     where
@@ -91,6 +95,7 @@ impl<T> Readable<T> for RcRW<T> {
 }
 
 impl<T> Readable<T> for RcM<T> {
+    type Resolved = T;
     type ReadGuard<'a>
         = MutexGuard<'a, T>
     where
@@ -111,6 +116,7 @@ impl<T> Readable<T> for RcM<T> {
 }
 
 impl<T> Readable<T> for ArcR<T> {
+    type Resolved = T;
     type ReadGuard<'a>
         = &'a T
     where
@@ -127,6 +133,7 @@ impl<T> Readable<T> for ArcR<T> {
 }
 
 impl<T> Readable<T> for ArcRW<T> {
+    type Resolved = T;
     type ReadGuard<'a>
         = RwLockReadGuard<'a, T>
     where
@@ -147,6 +154,7 @@ impl<T> Readable<T> for ArcRW<T> {
 }
 
 impl<T> Readable<T> for ArcM<T> {
+    type Resolved = T;
     type ReadGuard<'a>
         = MutexGuard<'a, T>
     where
