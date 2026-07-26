@@ -7,18 +7,281 @@ use std::{
     },
 };
 
-pub type RcR<T> = Rc<T>;
-pub type WkRcR<T> = rc::Weak<T>;
-pub type RcRW<T> = Rc<RwLock<T>>;
-pub type WkRcRW<T> = rc::Weak<RwLock<T>>;
-pub type RcM<T> = Rc<Mutex<T>>;
-pub type WkRcM<T> = rc::Weak<Mutex<T>>;
-pub type ArcR<T> = Arc<T>;
-pub type WkArcR<T> = sync::Weak<T>;
-pub type ArcRW<T> = Arc<RwLock<T>>;
-pub type WkArcRW<T> = sync::Weak<RwLock<T>>;
-pub type ArcM<T> = Arc<Mutex<T>>;
-pub type WkArcM<T> = sync::Weak<Mutex<T>>;
+#[derive(Default, Debug, Clone)]
+pub struct RcR<T>(Rc<T>);
+
+impl<T> RcR<T> {
+    pub fn new(value: T) -> Self {
+        RcR(Rc::new(value))
+    }
+}
+
+impl<T> Deref for RcR<T> {
+    type Target = Rc<T>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for RcR<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct WkRcR<T>(rc::Weak<T>);
+
+impl<T> WkRcR<T> {
+    pub fn new() -> Self {
+        WkRcR(rc::Weak::new())
+    }
+}
+
+impl<T> Deref for WkRcR<T> {
+    type Target = rc::Weak<T>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for WkRcR<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct RcRW<T>(Rc<RwLock<T>>);
+
+impl<T> RcRW<T> {
+    pub fn new(value: T) -> Self {
+        RcRW(Rc::new(RwLock::new(value)))
+    }
+}
+
+impl<T> Deref for RcRW<T> {
+    type Target = Rc<RwLock<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for RcRW<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct WkRcRW<T>(rc::Weak<RwLock<T>>);
+
+impl<T> WkRcRW<T> {
+    pub fn new() -> Self {
+        WkRcRW(rc::Weak::new())
+    }
+}
+
+impl<T> Deref for WkRcRW<T> {
+    type Target = rc::Weak<RwLock<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for WkRcRW<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct RcM<T>(Rc<Mutex<T>>);
+
+impl<T> RcM<T> {
+    pub fn new(value: T) -> Self {
+        RcM(Rc::new(Mutex::new(value)))
+    }
+}
+
+impl<T> Deref for RcM<T> {
+    type Target = Rc<Mutex<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for RcM<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct WkRcM<T>(rc::Weak<Mutex<T>>);
+
+impl<T> WkRcM<T> {
+    pub fn new() -> Self {
+        WkRcM(rc::Weak::new())
+    }
+}
+
+impl<T> Deref for WkRcM<T> {
+    type Target = rc::Weak<Mutex<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for WkRcM<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct ArcR<T>(Arc<T>);
+
+impl<T> ArcR<T> {
+    pub fn new(value: T) -> Self {
+        ArcR(Arc::new(value))
+    }
+}
+
+impl<T> Deref for ArcR<T> {
+    type Target = Arc<T>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for ArcR<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct WkArcR<T>(sync::Weak<T>);
+
+impl<T> WkArcR<T> {
+    pub fn new() -> Self {
+        WkArcR(sync::Weak::new())
+    }
+}
+
+impl<T> Deref for WkArcR<T> {
+    type Target = sync::Weak<T>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for WkArcR<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct ArcRW<T>(Arc<RwLock<T>>);
+
+impl<T> ArcRW<T> {
+    pub fn new(value: T) -> Self {
+        ArcRW(Arc::new(RwLock::new(value)))
+    }
+}
+
+impl<T> Deref for ArcRW<T> {
+    type Target = Arc<RwLock<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for ArcRW<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct WkArcRW<T>(sync::Weak<RwLock<T>>);
+
+impl<T> WkArcRW<T> {
+    pub fn new() -> Self {
+        WkArcRW(sync::Weak::new())
+    }
+}
+
+impl<T> Deref for WkArcRW<T> {
+    type Target = sync::Weak<RwLock<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for WkArcRW<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct ArcM<T>(Arc<Mutex<T>>);
+
+impl<T> ArcM<T> {
+    pub fn new(value: T) -> Self {
+        ArcM(Arc::new(Mutex::new(value)))
+    }
+}
+
+impl<T> Deref for ArcM<T> {
+    type Target = Arc<Mutex<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for ArcM<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
+
+#[derive(Default, Debug, Clone)]
+pub struct WkArcM<T>(sync::Weak<Mutex<T>>);
+
+impl<T> WkArcM<T> {
+    pub fn new() -> Self {
+        WkArcM(sync::Weak::new())
+    }
+}
+
+impl<T> Deref for WkArcM<T> {
+    type Target = sync::Weak<Mutex<T>>;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl<T> DerefMut for WkArcM<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.0
+    }
+}
 
 pub trait Readable<T> {
     type Resolved;
@@ -283,64 +546,30 @@ impl<T> Recoverable<T> for LockResult<T> {
     }
 }
 
-pub trait WeakContainer<T> {
-    type Strong;
-
-    fn upgrade(&self) -> Option<Self::Strong>;
+pub trait ReadContainer: Readable<Self::Item> {
+    type Item;
 }
 
-impl<T: Clone> WeakContainer<T> for Option<T> {
-    type Strong = T;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.clone()
-    }
+impl<T> ReadContainer for RcR<T> {
+    type Item = T;
 }
 
-impl<T> WeakContainer<T> for WkRcR<T> {
-    type Strong = RcR<T>;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.upgrade()
-    }
+impl<T> ReadContainer for RcRW<T> {
+    type Item = T;
 }
 
-impl<T> WeakContainer<T> for WkRcRW<T> {
-    type Strong = RcRW<T>;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.upgrade()
-    }
+impl<T> ReadContainer for RcM<T> {
+    type Item = T;
 }
 
-impl<T> WeakContainer<T> for WkRcM<T> {
-    type Strong = RcM<T>;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.upgrade()
-    }
+impl<T> ReadContainer for ArcR<T> {
+    type Item = T;
 }
 
-impl<T> WeakContainer<T> for WkArcR<T> {
-    type Strong = ArcR<T>;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.upgrade()
-    }
+impl<T> ReadContainer for ArcRW<T> {
+    type Item = T;
 }
 
-impl<T> WeakContainer<T> for WkArcRW<T> {
-    type Strong = ArcRW<T>;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.upgrade()
-    }
-}
-
-impl<T> WeakContainer<T> for WkArcM<T> {
-    type Strong = ArcM<T>;
-
-    fn upgrade(&self) -> Option<Self::Strong> {
-        self.upgrade()
-    }
+impl<T> ReadContainer for ArcM<T> {
+    type Item = T;
 }
