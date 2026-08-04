@@ -1,16 +1,17 @@
 [package]
 name = "tiborstd"
-version = "0.8.1"
+version = "0.9.0"
 edition = "2024"
 
 [features]
-default = ["bitset"]
+default = ["deref"]
 bitset = ["const-macros"]
 either = []
 const-macros = []
 serde = ["dep:serde"]
 container = []
 math = []
+deref = []
 
 [dependencies]
 serde = {version = "1.0.228", optional = true, features = ["derive"]}
