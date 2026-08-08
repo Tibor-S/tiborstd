@@ -14,6 +14,14 @@ impl<T> RcR<T> {
     pub fn new(value: T) -> Self {
         RcR(Rc::new(value))
     }
+
+    pub fn from_inner(value: Rc<T>) -> Self {
+        RcR(value)
+    }
+
+    pub fn inner(self) -> Rc<T> {
+        self.0
+    }
 }
 
 impl<T> Clone for RcR<T> {
@@ -36,12 +44,20 @@ impl<T> DerefMut for RcR<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct WkRcR<T>(rc::Weak<T>);
 
 impl<T> WkRcR<T> {
     pub fn new() -> Self {
         WkRcR(rc::Weak::new())
+    }
+
+    pub fn from_inner(value: rc::Weak<T>) -> Self {
+        WkRcR(value)
+    }
+
+    pub fn inner(self) -> rc::Weak<T> {
+        self.0
     }
 }
 
@@ -65,12 +81,20 @@ impl<T> DerefMut for WkRcR<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct RcRW<T>(Rc<RwLock<T>>);
 
 impl<T> RcRW<T> {
     pub fn new(value: T) -> Self {
         RcRW(Rc::new(RwLock::new(value)))
+    }
+
+    pub fn from_inner(value: Rc<RwLock<T>>) -> Self {
+        RcRW(value)
+    }
+
+    pub fn inner(self) -> Rc<RwLock<T>> {
+        self.0
     }
 }
 
@@ -94,12 +118,20 @@ impl<T> DerefMut for RcRW<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct WkRcRW<T>(rc::Weak<RwLock<T>>);
 
 impl<T> WkRcRW<T> {
     pub fn new() -> Self {
         WkRcRW(rc::Weak::new())
+    }
+
+    pub fn from_inner(value: rc::Weak<RwLock<T>>) -> Self {
+        WkRcRW(value)
+    }
+
+    pub fn inner(self) -> rc::Weak<RwLock<T>> {
+        self.0
     }
 }
 
@@ -123,12 +155,20 @@ impl<T> DerefMut for WkRcRW<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct RcM<T>(Rc<Mutex<T>>);
 
 impl<T> RcM<T> {
     pub fn new(value: T) -> Self {
         RcM(Rc::new(Mutex::new(value)))
+    }
+
+    pub fn from_inner(value: Rc<Mutex<T>>) -> Self {
+        RcM(value)
+    }
+
+    pub fn inner(self) -> Rc<Mutex<T>> {
+        self.0
     }
 }
 
@@ -152,12 +192,20 @@ impl<T> DerefMut for RcM<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct WkRcM<T>(rc::Weak<Mutex<T>>);
 
 impl<T> WkRcM<T> {
     pub fn new() -> Self {
         WkRcM(rc::Weak::new())
+    }
+
+    pub fn from_inner(value: rc::Weak<Mutex<T>>) -> Self {
+        WkRcM(value)
+    }
+
+    pub fn inner(self) -> rc::Weak<Mutex<T>> {
+        self.0
     }
 }
 
@@ -181,12 +229,20 @@ impl<T> DerefMut for WkRcM<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct ArcR<T>(Arc<T>);
 
 impl<T> ArcR<T> {
     pub fn new(value: T) -> Self {
         ArcR(Arc::new(value))
+    }
+
+    pub fn from_inner(value: Arc<T>) -> Self {
+        ArcR(value)
+    }
+
+    pub fn inner(self) -> Arc<T> {
+        self.0
     }
 }
 
@@ -210,12 +266,20 @@ impl<T> DerefMut for ArcR<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct WkArcR<T>(sync::Weak<T>);
 
 impl<T> WkArcR<T> {
     pub fn new() -> Self {
         WkArcR(sync::Weak::new())
+    }
+
+    pub fn from_inner(value: sync::Weak<T>) -> Self {
+        WkArcR(value)
+    }
+
+    pub fn inner(self) -> sync::Weak<T> {
+        self.0
     }
 }
 
@@ -239,12 +303,20 @@ impl<T> DerefMut for WkArcR<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct ArcRW<T>(Arc<RwLock<T>>);
 
 impl<T> ArcRW<T> {
     pub fn new(value: T) -> Self {
         ArcRW(Arc::new(RwLock::new(value)))
+    }
+
+    pub fn from_inner(value: Arc<RwLock<T>>) -> Self {
+        ArcRW(value)
+    }
+
+    pub fn inner(self) -> Arc<RwLock<T>> {
+        self.0
     }
 }
 
@@ -268,12 +340,20 @@ impl<T> DerefMut for ArcRW<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct WkArcRW<T>(sync::Weak<RwLock<T>>);
 
 impl<T> WkArcRW<T> {
     pub fn new() -> Self {
         WkArcRW(sync::Weak::new())
+    }
+
+    pub fn from_inner(value: sync::Weak<RwLock<T>>) -> Self {
+        WkArcRW(value)
+    }
+
+    pub fn inner(self) -> sync::Weak<RwLock<T>> {
+        self.0
     }
 }
 
@@ -297,12 +377,20 @@ impl<T> DerefMut for WkArcRW<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct ArcM<T>(Arc<Mutex<T>>);
 
 impl<T> ArcM<T> {
     pub fn new(value: T) -> Self {
         ArcM(Arc::new(Mutex::new(value)))
+    }
+
+    pub fn from_inner(value: Arc<Mutex<T>>) -> Self {
+        ArcM(value)
+    }
+
+    pub fn inner(self) -> Arc<Mutex<T>> {
+        self.0
     }
 }
 
@@ -326,12 +414,20 @@ impl<T> DerefMut for ArcM<T> {
     }
 }
 
-#[derive(Default, Debug, )]
+#[derive(Default, Debug)]
 pub struct WkArcM<T>(sync::Weak<Mutex<T>>);
 
 impl<T> WkArcM<T> {
     pub fn new() -> Self {
         WkArcM(sync::Weak::new())
+    }
+
+    pub fn from_inner(value: sync::Weak<Mutex<T>>) -> Self {
+        WkArcM(value)
+    }
+
+    pub fn inner(self) -> sync::Weak<Mutex<T>> {
+        self.0
     }
 }
 
