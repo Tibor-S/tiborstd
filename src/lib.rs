@@ -8,6 +8,8 @@ pub mod container;
 pub mod either;
 #[cfg(feature = "math")]
 pub mod math;
+#[cfg(feature = "result-plus")]
+pub mod result_plus;
 #[cfg(feature = "deref")]
 #[macro_use]
 pub mod deref;

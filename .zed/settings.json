@@ -15,7 +15,8 @@
             "either",
             "math",
             "deref",
-            "bitset"
+            "bitset",
+            "result-plus"
           ],
         },
       },
